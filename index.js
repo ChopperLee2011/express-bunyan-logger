@@ -168,8 +168,11 @@ module.exports.errorLogger = function (opts) {
             if (obfuscate) {
               for(var i in obfuscate) {
                 var key = obfuscate[i];
-                if (has(json, key)) {
-                  set(json, key, obfuscatePlaceholder);
+                if(json.body && json.body.query){
+                  const re = new RegExp(`(${key}\\s*:\\s*")(\\S+)"`, 'i');
+                  json.body = {
+                    query:json.body.query.replace(re,'$1******"')
+                  }
                 }
               }
             }
