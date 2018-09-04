@@ -173,6 +173,10 @@ module.exports.errorLogger = function (opts) {
                   json.body = {
                     query:json.body.query.replace(re,'$1******"')
                   }
+                } else {
+                  if (has(json.body, key)) {
+                    json.body = Object.assign({}, json.body, {[key]: '******'})
+                  }
                 }
               }
             }
